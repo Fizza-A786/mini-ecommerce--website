@@ -1,14 +1,17 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../Redux/Features/CartSlice";
 import products from "../data/products";
+import gsap from "gsap";
 
 const categories = ["All", "Mouse", "Keyboard", "Laptop", "Mobile"];
 
 const ProductPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [addedId, setAddedId] = useState(null);
+
+  const cardsRef = useRef([]);
 
   const searchTerm = useSelector(
     (state) => state.products?.searchTerm || ""
@@ -18,9 +21,7 @@ const ProductPage = () => {
     let result = products;
 
     if (selectedCategory !== "All") {
-      result = result.filter(
-        (p) => p.category === selectedCategory
-      );
+      result = result.filter((p) => p.category === selectedCategory);
     }
 
     if (searchTerm) {
@@ -35,11 +36,32 @@ const ProductPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleAddToCart = (item) => {
+  const handleAddToCart = (item, index) => {
     dispatch(addToCart(item));
     setAddedId(item.id);
+
+    gsap.fromTo(
+      cardsRef.current[index],
+      { scale: 1 },
+      { scale: 1.08, duration: 0.2, yoyo: true, repeat: 1 }
+    );
+
     setTimeout(() => setAddedId(null), 800);
   };
+
+  useEffect(() => {
+    gsap.fromTo(
+      cardsRef.current,
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        stagger: 0.12,
+        ease: "power2.out",
+      }
+    );
+  }, [filteredProducts]);
 
   return (
     <section className="min-h-screen bg-[#0a0a0a] text-white px-4 md:px-15 py-16">
@@ -76,10 +98,11 @@ const ProductPage = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-10">
 
-          {filteredProducts.map((item) => (
+          {filteredProducts.map((item, index) => (
             <div
               key={item.id}
-              className="bg-white/5 border border-purple-500/10 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 shadow-lg w-full"
+              ref={(el) => (cardsRef.current[index] = el)}
+              className="bg-white/5 border border-purple-500/10 rounded-2xl overflow-hidden shadow-lg"
             >
 
               <div
@@ -114,7 +137,7 @@ const ProductPage = () => {
                 <div className="flex flex-col gap-2">
 
                   <button
-                    onClick={() => handleAddToCart(item)}
+                    onClick={() => handleAddToCart(item, index)}
                     className={`w-full py-2 rounded-xl transition font-medium ${
                       addedId === item.id
                         ? "bg-green-600"

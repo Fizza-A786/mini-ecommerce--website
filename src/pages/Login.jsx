@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaEnvelope, FaLock } from "react-icons/fa";
+import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -9,6 +9,8 @@ const Login = () => {
     email: "",
     password: "",
   });
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -51,7 +53,7 @@ const Login = () => {
         }}
       >
         <div className="absolute inset-0 bg-black/60 flex flex-col justify-center items-center text-center p-10">
-          <h1 className="text-4xl font-bold mb-3">Welcome Back </h1>
+          <h1 className="text-4xl font-bold mb-3">Welcome Back</h1>
           <p className="text-gray-300 max-w-md text-sm">
             Login to continue your journey and access your dashboard.
           </p>
@@ -81,22 +83,30 @@ const Login = () => {
               />
             </div>
 
-            <div className="flex items-center bg-white/10 rounded-lg px-4 py-3">
+            <div className="flex items-center bg-white/10 rounded-lg px-4 py-3 relative">
               <FaLock className="text-gray-400 mr-3" />
+
               <input
                 name="password"
                 value={form.password}
                 onChange={handleChange}
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 className="w-full bg-transparent outline-none text-sm"
               />
+
+              <div
+                onClick={() => setShowPassword(!showPassword)}
+                className="cursor-pointer text-gray-400"
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </div>
             </div>
 
             <div className="text-right text-sm text-gray-400">
-              <a href="#" className="hover:text-purple-400">
+              <span className="hover:text-purple-400 cursor-pointer">
                 Forgot Password?
-              </a>
+              </span>
             </div>
 
             <button

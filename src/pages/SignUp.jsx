@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
+import { FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -50,7 +50,7 @@ const Signup = () => {
       confirmPassword: "",
     });
 
-    navigate("/");
+    navigate("/login");
   };
 
   return (
@@ -64,7 +64,7 @@ const Signup = () => {
         }}
       >
         <div className="absolute inset-0 bg-black/60 flex flex-col justify-center items-center text-center p-10">
-          <h1 className="text-4xl font-bold mb-3">Join Us </h1>
+          <h1 className="text-4xl font-bold mb-3">Join Us</h1>
           <p className="text-gray-300 max-w-md text-sm">
             Create your account and start your journey.
           </p>
@@ -117,16 +117,13 @@ const Signup = () => {
                 placeholder="Password"
                 className="w-full bg-transparent outline-none text-sm"
               />
+              <div
+                onClick={() => setShowPassword(!showPassword)}
+                className="cursor-pointer text-gray-400"
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </div>
             </div>
-
-            <label className="text-sm text-gray-400 flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={showPassword}
-                onChange={() => setShowPassword(!showPassword)}
-              />
-              Show Password
-            </label>
 
             {/* CONFIRM PASSWORD */}
             <div className="flex items-center bg-white/10 rounded-lg px-4 py-3">
@@ -139,16 +136,15 @@ const Signup = () => {
                 placeholder="Confirm Password"
                 className="w-full bg-transparent outline-none text-sm"
               />
+              <div
+                onClick={() =>
+                  setShowConfirmPassword(!showConfirmPassword)
+                }
+                className="cursor-pointer text-gray-400"
+              >
+                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+              </div>
             </div>
-
-            <label className="text-sm text-gray-400 flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={showConfirmPassword}
-                onChange={() => setShowConfirmPassword(!showConfirmPassword)}
-              />
-              Show Confirm Password
-            </label>
 
             <button
               type="submit"
