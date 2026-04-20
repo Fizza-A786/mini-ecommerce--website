@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./pages/Footer";
 
 import Home from "./pages/Home";
-import ProductPage from "./Home/ProductPage";
+import ProductPage from "./home/ProductPage";
 import ProductDetail from "./pages/ProductDetail";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";

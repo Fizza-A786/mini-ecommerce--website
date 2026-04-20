@@ -1,6 +1,6 @@
 import React from 'react'
-import Hero from './../Home/Hero'
-import ProductPage from './../Home/ProductPage';
+import Hero from '../home/Hero'
+import ProductPage from '../home/ProductPage';
 
 const Home = () => {
   return (

@@ -4,7 +4,6 @@ const cartSlice = createSlice({
   name: "cart",
   initialState: {
     items: [],
-    searchTerm: "",
   },
 
   reducers: {
@@ -53,10 +52,6 @@ const cartSlice = createSlice({
     clearCart: (state) => {
       state.items = [];
     },
-
-    setSearchTerm: (state, action) => {
-      state.searchTerm = action.payload;
-    },
   },
 });
 
@@ -66,7 +61,6 @@ export const {
   decreaseQty,
   removeItem,
   clearCart,
-  setSearchTerm,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

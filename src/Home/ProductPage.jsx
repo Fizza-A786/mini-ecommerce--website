@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../Redux/Features/CartSlice";
-import products from "./../data/products";
+import products from "../data/products";
 
 const categories = ["All", "Mouse", "Keyboard", "Laptop", "Mobile"];
 
