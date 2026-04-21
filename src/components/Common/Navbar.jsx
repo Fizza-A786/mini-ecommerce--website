@@ -45,7 +45,7 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
 
         {/* ICONS */}
         <div className="flex items-center gap-5 text-xl">
-          <FaHeart />
+          <FaHeart className="cursor-pointer hover:text-red-500" />
 
           <Link to="/cart" className="relative">
             <TiShoppingCart size={26} />
