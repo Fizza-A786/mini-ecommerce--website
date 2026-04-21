@@ -40,7 +40,7 @@ const Hero = () => {
   useEffect(() => {
     const tl = gsap.timeline({ repeat: -1 });
 
-    slides.forEach(( ) => {
+    slides.forEach(() => {
       tl.to([textRef.current, btnRef.current], {
         opacity: 0,
         y: 30,
