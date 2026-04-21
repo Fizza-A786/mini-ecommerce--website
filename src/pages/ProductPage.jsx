@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../Redux/Features/CartSlice";
+import { addToCart } from "../Redux/Features/CartSlice.js";
 import products from "../data/products";
 import gsap from "gsap";
 

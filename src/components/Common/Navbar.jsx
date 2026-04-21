@@ -3,7 +3,7 @@ import { FaHeart, FaUserCircle, FaSearch } from "react-icons/fa";
 import { TiShoppingCart } from "react-icons/ti";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import { setSearchTerm } from "../../Redux/Features/ProductSlice";
+import { setSearchTerm } from "../../Redux/Features/ProductSlice.js";
 
 const Navbar = () => {
   const dispatch = useDispatch();
