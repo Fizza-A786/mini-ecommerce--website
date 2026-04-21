@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import products from "../../data/products";
 
-const productSlice = createSlice({
+const ProductSlice = createSlice({
   name: "products",
   initialState: {
     items: products,
@@ -14,5 +14,5 @@ const productSlice = createSlice({
   },
 });
 
-export const { setSearchTerm } = productSlice.actions;
-export default productSlice.reducer;
+export const { setSearchTerm } = ProductSlice.actions;
+export default ProductSlice.reducer;
