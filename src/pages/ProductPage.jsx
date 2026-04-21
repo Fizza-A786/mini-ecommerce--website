@@ -16,11 +16,11 @@ const ProductPage = ({ searchTerm }) => {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  // URL SEARCH (IMPORTANT)
+  // URL SEARCH
   const urlSearch =
     new URLSearchParams(location.search).get("search") || "";
 
-  // FILTER LOGIC
+  // FILTER PRODUCTS
   const filteredProducts = useMemo(() => {
     let result = products;
 
@@ -39,12 +39,12 @@ const ProductPage = ({ searchTerm }) => {
     return result;
   }, [selectedCategory, searchTerm, urlSearch]);
 
-  // SAFE REF RESET
+  // SAFE REFS RESET
   useEffect(() => {
     cardsRef.current = cardsRef.current.slice(0, filteredProducts.length);
   }, [filteredProducts]);
 
-  // GSAP ANIMATION SAFE
+  // GSAP ANIMATION
   useEffect(() => {
     const validCards = cardsRef.current.filter(Boolean);
 
@@ -63,7 +63,7 @@ const ProductPage = ({ searchTerm }) => {
     }
   }, [filteredProducts]);
 
-  // ADD TO CART ANIMATION
+  // ADD TO CART
   const handleAddToCart = (item, index) => {
     dispatch(addToCart(item));
     setAddedId(item.id);
@@ -82,7 +82,7 @@ const ProductPage = ({ searchTerm }) => {
   };
 
   return (
-    <section className="min-h-screen bg-[#0a0a0a] text-white px-4 md:px-18 py-16">
+    <section className="min-h-screen bg-[#0a0a0a] text-white px-4 md:px-15 py-16">
 
       {/* TITLE */}
       <div className="text-center mb-12">
@@ -94,7 +94,7 @@ const ProductPage = ({ searchTerm }) => {
         </p>
       </div>
 
-      {/* CATEGORY FILTER */}
+      {/* CATEGORY */}
       <div className="flex flex-wrap justify-center gap-3 mb-12">
         {categories.map((cat) => (
           <button
@@ -119,70 +119,74 @@ const ProductPage = ({ searchTerm }) => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
 
-          {filteredProducts.map((item, index) => (
-            <div
-              key={item.id}
-              ref={(el) => (cardsRef.current[index] = el)}
-              className="bg-white/5 border border-purple-500/10 rounded-2xl overflow-hidden shadow-lg"
-            >
+          {filteredProducts.map((item, index) => {
+            const isAdded = addedId === item.id; // ✅ FIX ESLINT HERE
 
-              {/* IMAGE */}
+            return (
               <div
-                className="h-56 overflow-hidden cursor-pointer"
-                onClick={() => navigate(`/product/${item.id}`)}
+                key={item.id}
+                ref={(el) => (cardsRef.current[index] = el)}
+                className="bg-white/5 border border-purple-500/10 rounded-2xl overflow-hidden shadow-lg"
               >
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="w-full h-full object-cover hover:scale-110 transition duration-500"
-                />
-              </div>
 
-              {/* CONTENT */}
-              <div className="p-5">
+                {/* IMAGE */}
+                <div
+                  className="h-56 overflow-hidden cursor-pointer"
+                  onClick={() => navigate(`/product/${item.id}`)}
+                >
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-full h-full object-cover hover:scale-110 transition duration-500"
+                  />
+                </div>
 
-                <p className="text-xs text-purple-400 mb-1">
-                  {item.category}
-                </p>
+                {/* CONTENT */}
+                <div className="p-5">
 
-                <h2 className="text-lg font-semibold line-clamp-1">
-                  {item.name}
-                </h2>
+                  <p className="text-xs text-purple-400 mb-1">
+                    {item.category}
+                  </p>
 
-                <p className="text-yellow-400 mt-2">
-                  ⭐ {item.rating}
-                </p>
+                  <h2 className="text-lg font-semibold line-clamp-1">
+                    {item.name}
+                  </h2>
 
-                <p className="text-gray-300 font-medium mt-2 mb-4 text-lg">
-                  ${item.price}
-                </p>
+                  <p className="text-yellow-400 mt-2">
+                    ⭐ {item.rating}
+                  </p>
 
-                <div className="flex flex-col gap-2">
+                  <p className="text-gray-300 font-medium mt-2 mb-4 text-lg">
+                    ${item.price}
+                  </p>
 
-                  <button
-                    onClick={() => handleAddToCart(item, index)}
-                    className={`w-full py-2 rounded-xl font-medium ${
-                      addedId === item.id
-                        ? "bg-green-600"
-                        : "bg-purple-600 hover:bg-purple-700"
-                    }`}
-                  >
-                    {addedId === item.id ? "Added ✓" : "Add to Cart"}
-                  </button>
+                  <div className="flex flex-col gap-2">
 
-                  <button
-                    onClick={() => navigate(`/product/${item.id}`)}
-                    className="w-full border border-gray-600 hover:border-purple-500 py-2 rounded-xl text-sm"
-                  >
-                    View Details
-                  </button>
+                    <button
+                      onClick={() => handleAddToCart(item, index)}
+                      className={`w-full py-2 rounded-xl transition font-medium ${
+                        isAdded
+                          ? "bg-green-600"
+                          : "bg-purple-600 hover:bg-purple-700"
+                      }`}
+                    >
+                      {isAdded ? "Added ✓" : "Add to Cart"}
+                    </button>
+
+                    <button
+                      onClick={() => navigate(`/product/${item.id}`)}
+                      className="w-full border border-gray-600 hover:border-purple-500 py-2 rounded-xl text-sm"
+                    >
+                      View Details
+                    </button>
+
+                  </div>
 
                 </div>
 
               </div>
-
-            </div>
-          ))}
+            );
+          })}
 
         </div>
       )}

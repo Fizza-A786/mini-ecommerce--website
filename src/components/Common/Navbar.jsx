@@ -14,9 +14,11 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
     return null;
   }
 
+  // ✅ FIXED SEARCH (CLEAR INPUT AFTER SEARCH)
   const handleSearch = () => {
     if (searchTerm.trim() !== "") {
       navigate(`/products?search=${searchTerm}`);
+      setSearchTerm(""); // 👈 INPUT CLEAR
     }
   };
 
@@ -32,6 +34,7 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
 
         {/* DESKTOP SEARCH */}
         <div className="hidden md:flex items-center bg-white/10 px-4 py-2 rounded-full w-[320px]">
+
           <FaSearch onClick={handleSearch} className="cursor-pointer mr-2" />
 
           <input
@@ -41,11 +44,13 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
             placeholder="Search products..."
             className="bg-transparent outline-none w-full text-sm"
           />
+
         </div>
 
         {/* ICONS */}
         <div className="flex items-center gap-5 text-xl">
-          <FaHeart className="cursor-pointer hover:text-red-500" />
+
+          <FaHeart />
 
           <Link to="/cart" className="relative">
             <TiShoppingCart size={26} />
@@ -57,10 +62,12 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
           <Link to="/signup">
             <FaUserCircle />
           </Link>
+
         </div>
+
       </div>
 
-      {/* ✅ MOBILE SEARCH */}
+      {/* MOBILE SEARCH */}
       <div className="flex md:hidden px-5 pb-3">
         <input
           value={searchTerm}
