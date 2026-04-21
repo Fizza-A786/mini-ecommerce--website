@@ -38,33 +38,34 @@ const Hero = () => {
   const bgRef = useRef(null);
 
   useEffect(() => {
-    const tl = gsap.timeline({ repeat: -1 });
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % slides.length);
+    }, 4000); // Change slide every 4 seconds
 
-    slides.forEach(() => {
-      tl.to([textRef.current, btnRef.current], {
-        opacity: 0,
-        y: 30,
-        duration: 0.5,
-        onComplete: () => {
-          setIndex((prev) => (prev + 1) % slides.length);
-        },
-      })
-        .fromTo(
-          [textRef.current, btnRef.current],
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }
-        )
-        .fromTo(
-          bgRef.current,
-          { scale: 1.1 },
-          { scale: 1, duration: 1 },
-          "<"
-        )
-        .to({}, { duration: 2.5 }); // delay between slides
-    });
+    // Simple fade animation
+    gsap.fromTo(
+      [textRef.current, btnRef.current],
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }
+    );
 
-    return () => tl.kill();
+    return () => clearInterval(interval);
   }, []);
+
+  // Animate on index change
+  useEffect(() => {
+    gsap.fromTo(
+      [textRef.current, btnRef.current],
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }
+    );
+
+    gsap.fromTo(
+      bgRef.current,
+      { scale: 1.1 },
+      { scale: 1, duration: 1, ease: "power2.out" }
+    );
+  }, [index]);
 
   return (
     <section className="h-screen relative overflow-hidden text-white">
