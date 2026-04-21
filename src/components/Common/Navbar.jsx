@@ -50,17 +50,17 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
         {/* ICONS */}
         <div className="flex items-center gap-5 text-xl">
 
-          <FaHeart />
+          <FaHeart className="hover:text-red-500 cursor-pointer" />
 
           <Link to="/cart" className="relative">
-            <TiShoppingCart size={26} />
+            <TiShoppingCart size={26} className="hover:text-purple-500 cursor-pointer" />
             <span className="absolute -top-2 -right-3 bg-purple-600 text-xs px-2 rounded-full">
               {cartItems.length}
             </span>
           </Link>
 
           <Link to="/signup">
-            <FaUserCircle />
+            <FaUserCircle className="cursor-pointer hover:text-purple-600"/>
           </Link>
 
         </div>
